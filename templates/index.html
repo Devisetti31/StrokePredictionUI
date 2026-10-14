@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Stroke Prediction</title>
+
+</head>
+
+<body>
+
+    <h1>Stroke Prediction</h1>
+
+    <form id="predictionForm">
+
+        <label>Gender:</label>
+
+        <select id="gender">
+            <option>Male</option>
+            <option>Female</option>
+        </select>
+
+        <br><br>
+
+
+        <label>Age:</label>
+
+        <input type="number" id="age" value="55">
+
+        <br><br>
+
+
+        <label>Hypertension:</label>
+
+        <select id="hypertension">
+
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+
+        </select>
+
+        <br><br>
+
+
+        <label>Heart Disease:</label>
+
+        <select id="heart_disease">
+
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+
+        </select>
+
+        <br><br>
+
+
+        <label>Ever Married:</label>
+
+        <select id="ever_married">
+
+            <option>Yes</option>
+            <option>No</option>
+
+        </select>
+
+        <br><br>
+
+
+        <label>Work Type:</label>
+
+        <select id="work_type">
+
+            <option>Private</option>
+            <option>Self-employed</option>
+            <option>Govt_job</option>
+            <option>children</option>
+            <option>Never_worked</option>
+
+        </select>
+
+        <br><br>
+
+
+        <label>Residence Type:</label>
+
+        <select id="Residence_type">
+
+            <option>Urban</option>
+            <option>Rural</option>
+
+        </select>
+
+        <br><br>
+
+
+        <label>Average Glucose Level:</label>
+
+        <input
+            type="number"
+            id="avg_glucose_level"
+            step="0.1"
+            value="160.5"
+        >
+
+        <br><br>
+
+
+        <label>BMI:</label>
+
+        <input
+            type="number"
+            id="bmi"
+            step="0.1"
+            value="28.4"
+        >
+
+        <br><br>
+
+
+        <label>Smoking Status:</label>
+
+        <select id="smoking_status">
+
+            <option>formerly smoked</option>
+            <option>never smoked</option>
+            <option>smokes</option>
+            <option>Unknown</option>
+
+        </select>
+
+        <br><br>
+
+
+        <button type="submit">
+            Predict
+        </button>
+
+    </form>
+
+
+    <h2 id="result"></h2>
+
+
+<script>
+
+document
+.getElementById("predictionForm")
+.addEventListener("submit", async function(event) {
+
+    event.preventDefault();
+
+
+    const data = {
+
+        gender:
+            document.getElementById("gender").value,
+
+        age:
+            document.getElementById("age").value,
+
+        hypertension:
+            document.getElementById("hypertension").value,
+
+        heart_disease:
+            document.getElementById("heart_disease").value,
+
+        ever_married:
+            document.getElementById("ever_married").value,
+
+        work_type:
+            document.getElementById("work_type").value,
+
+        Residence_type:
+            document.getElementById("Residence_type").value,
+
+        avg_glucose_level:
+            document.getElementById("avg_glucose_level").value,
+
+        bmi:
+            document.getElementById("bmi").value,
+
+        smoking_status:
+            document.getElementById("smoking_status").value
+
+    };
+
+
+    const response = await fetch("/predict", {
+
+        method: "POST",
+
+        headers: {
+
+            "Content-Type": "application/json"
+
+        },
+
+        body: JSON.stringify(data)
+
+    });
+
+
+    const result = await response.json();
+
+
+    document.getElementById("result").innerText =
+        result.result;
+
+});
+
+</script>
+
+</body>
+
+</html>
